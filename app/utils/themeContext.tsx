@@ -23,7 +23,7 @@ type ThemeContextValue = {
 };
 
 const defaultTheme: Theme = {
-  primary: "#EE0000",
+  primary: "#045199",
   secondary: "#2E211E",
 };
 

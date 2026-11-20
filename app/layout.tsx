@@ -6,7 +6,7 @@ import {
   Poppins,
   Rammetto_One,
 } from "next/font/google";
-import { ThemeProvider } from "./assets/utils/themeContext";
+import { ThemeProvider } from "./utils/themeContext";
 import "./globals.css";
 
 const headingFont = Rammetto_One({

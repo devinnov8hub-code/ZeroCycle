@@ -6,6 +6,8 @@ import CurrentYear from "./components/CurrentYear";
 import Image from "next/image";
 import heroImg from "./assets/product_image3.png";
 import visionImg from "./assets/green_image.jpeg";
+import Logo1 from "../app/assets/Brand_logo_2.png";
+
 import { motion, useScroll, useTransform, type Variants } from "framer-motion";
 
 import {
@@ -273,7 +275,7 @@ export default function App() {
       </section>
 
       {/**Logo carousel */}
-      <LogoCarousel/>
+      <LogoCarousel />
 
       {/* ABOUT SECTION */}
       <section
@@ -467,17 +469,15 @@ export default function App() {
                   key={spec.title}
                   variants={cardVariant}
                   whileHover={{ y: -6, transition: { duration: 0.25, ease: "easeOut" } }}
-                  className={`relative overflow-hidden rounded-[1.75rem] p-8 sm:p-10 ${
-                    index === 1
+                  className={`relative overflow-hidden rounded-[1.75rem] p-8 sm:p-10 ${index === 1
                       ? "bg-brand-primary text-white shadow-xl shadow-brand-primary/15"
                       : "border border-gray-100 bg-[#F7F9F5] text-[#172119]"
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center justify-between">
                     <span
-                      className={`font-tip text-sm font-bold uppercase tracking-widest ${
-                        index === 1 ? "text-white/75" : "text-gray-600"
-                      }`}
+                      className={`font-tip text-sm font-bold uppercase tracking-widest ${index === 1 ? "text-white/75" : "text-gray-600"
+                        }`}
                     >
                       0{index + 1} / Performance
                     </span>
@@ -495,9 +495,8 @@ export default function App() {
                     </span>
 
                     <span
-                      className={`text-lg font-bold tracking-wider ${
-                        index === 1 ? "text-white/90" : "text-black"
-                      }`}
+                      className={`text-lg font-bold tracking-wider ${index === 1 ? "text-white/90" : "text-black"
+                        }`}
                     >
                       {spec.unit}
                     </span>
@@ -508,23 +507,20 @@ export default function App() {
                   </h3>
 
                   <p
-                    className={`font-tip mt-2 text-lg ${
-                      index === 1 ? "text-white/80" : "text-gray-700"
-                    }`}
+                    className={`font-tip mt-2 text-lg ${index === 1 ? "text-white/80" : "text-gray-700"
+                      }`}
                   >
                     {spec.description}
                   </p>
 
                   <div
-                    className={`mt-8 h-px w-full ${
-                      index === 1 ? "bg-white/20" : "bg-gray-200"
-                    }`}
+                    className={`mt-8 h-px w-full ${index === 1 ? "bg-white/20" : "bg-gray-200"
+                      }`}
                   />
 
                   <p
-                    className={`font-tip mt-5 text-base ${
-                      index === 1 ? "text-white/70" : "text-gray-600"
-                    }`}
+                    className={`font-tip mt-5 text-base ${index === 1 ? "text-white/70" : "text-gray-600"
+                      }`}
                   >
                     Proposed design requirement
                   </p>
@@ -697,9 +693,17 @@ export default function App() {
             <div className="flex flex-col gap-10 border-b border-white/10 pb-10 md:flex-row md:items-start md:justify-between">
               <div className="flex flex-col gap-8 sm:flex-row sm:gap-16">
                 <a href="#home" className="flex w-fit items-center gap-3">
-                  <span className="text-lg font-black tracking-[0.12em]">
-                    ZeroCycle<span className="text-[#A4EF75]">.</span>
-                  </span>
+                  <span className="inline-flex items-center gap-1 text-lg font-black tracking-[0.12em]">
+  <Image
+    src={Logo1}
+    width={150}
+    alt="zero cycle logo"
+    className="h-auto w-[150px] shrink-0"
+  />
+  <span>
+  
+  </span>
+</span>
                 </a>
 
                 <div className="space-y-4">

@@ -2,6 +2,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Logo1 from "../assets/Brand_logo_1.png";
+import Logo2 from "../assets/Brand_logo_2.png";
+import Image from 'next/image';
 
 const navLinks = [
   { label: 'Home', href: '#home' },
@@ -84,7 +87,12 @@ export default function Navbar() {
             
 
             <span className="text-[17px] font-bold tracking-[0.12em]">
-              Zero<span className="text-brand-primary">Cycle.</span>
+             <Image 
+             src={Logo2}
+             alt='zerocycle logo'
+             width={150}
+             loading="eager"
+             />
             </span>
           </a>
 
