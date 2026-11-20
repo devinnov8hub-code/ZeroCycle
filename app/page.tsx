@@ -28,7 +28,7 @@ import LogoCarousel from "./components/logoCarousel";
 
 const PROGRAMME = "TETFAIR 2026";
 const PRODUCT_NAME = "ZeroCycle";
-const PRODUCT_DESCRIPTOR = "an electric motorcycle prototype";
+const PRODUCT_DESCRIPTOR = "Electric motorcycle";
 
 const technology = [
   {
@@ -305,8 +305,8 @@ export default function App() {
             >
               The Zero Emission Electric Motorcycle converts petrol-powered
               motorcycles to electric propulsion, replacing the internal
-              combustion engine while retaining the original chassis. Its
-              prototype uses an electric motor, rechargeable lithium-ion
+              combustion engine while retaining the original chassis. It
+              uses an electric motor, rechargeable lithium-ion
               battery, motor controller, and BMS to deliver and regulate power
               and monitor battery performance.
               {" "}
@@ -448,7 +448,7 @@ export default function App() {
               variants={fadeUp}
               className="font-tip mt-6 text-lg leading-9 text-gray-700 sm:text-xl sm:leading-10"
             >
-              The prototype is being developed around practical
+              The electric bike is being developed around practical
               transportation requirements, with proposed performance
               targets for everyday mobility.
             </motion.p>

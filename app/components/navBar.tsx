@@ -194,7 +194,7 @@ export default function Navbar() {
                 `}
               >
                 {link.label}
-                <span className="text-xl">↗</span>
+                {/**<span className="text-xl">↗</span> */}
               </a>
             );
           })}
