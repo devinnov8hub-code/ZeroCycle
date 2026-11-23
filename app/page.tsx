@@ -209,7 +209,7 @@ export default function App() {
     offset: ["start start", "end start"],
   });
 
-  // Subtle parallax lift on the hero motorcycle image as user scrolls
+  // parallax scroll
   const bikeY = useTransform(scrollYProgress, [0, 1], [0, -75]);
   const titleY = useTransform(scrollYProgress, [0, 1], [0, 45]);
 
