@@ -32,7 +32,8 @@ const PRODUCT_NAME = "ZeroCycle";
 const PRODUCT_DESCRIPTOR = "Electric motorcycle";
 
 const teamContent = {
-  title: "Meet the team behind ZeroCycle.",
+  title: "Meet the team behind ",
+  end: "ZeroCycle.",
   paragraphs: [
     "The ZeroCycle team is working to make electric mobility more accessible by transforming the motorcycles people already depend on, rather than asking riders to replace them.",
     "The project is built around a practical retrofit system that replaces the combustion engine with an electric drivetrain while retaining the original chassis. Its motor, lithium-ion battery, controller and Battery Management System work together to deliver power and monitor battery health.",
@@ -671,8 +672,9 @@ export default function App() {
           {/* WRITEUP  */}
           <motion.div variants={fadeUp} className="min-w-0">
             <h2 className="font-title text-4xl font-black leading-[1.1] tracking-tight text-[#172119] sm:text-5xl">
-              {teamContent.title}
+              {teamContent.title} <span className="font-title text-4xl leading-[1.1] tracking-tight text-brand-primary sm:text-5xlleading-[1.1] tracking-tight text-brand-primary sm:text-5xl ">{teamContent.end}</span>
             </h2>
+           
 
             <div
               aria-hidden="true"
