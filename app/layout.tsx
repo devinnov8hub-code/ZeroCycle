@@ -47,7 +47,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${headingFont.variable} ${tipFont.variable} ${titleFont.variable} ${bodyFont.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${headingFont.variable} ${tipFont.variable} ${titleFont.variable} ${bodyFont.variable} ${geistMono.variable} h-full antialiased scroll-smooth`}
+      data-scroll-behavior="smooth"
     >
       <body className="min-h-full flex flex-col">
         <ThemeProvider>{children}</ThemeProvider>

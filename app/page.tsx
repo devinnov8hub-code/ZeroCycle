@@ -224,7 +224,7 @@ export default function App() {
         ref={heroRef}
         id="home"
         className="
-          relative isolate min-h-[850px] w-full
+          relative isolate min-h-[850px] w-full scroll-mt-28
           overflow-hidden bg-[#F8F9F6]
           px-5 pb-20 pt-36
           sm:px-10 lg:min-h-screen lg:px-16
