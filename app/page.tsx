@@ -1,12 +1,13 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, type ReactNode } from "react";
 import Navbar from "./components/navBar";
 import CurrentYear from "./components/CurrentYear";
 import Image from "next/image";
 import heroImg from "./assets/product_image3.png";
 import visionImg from "./assets/green_image.jpeg";
 import Logo1 from "../app/assets/Brand_logo_2.png";
+import teamImg from "../app/assets/Team_Image.jpg";
 
 import { motion, useScroll, useTransform, type Variants } from "framer-motion";
 
@@ -29,6 +30,16 @@ import LogoCarousel from "./components/logoCarousel";
 const PROGRAMME = "TETFAIR 2026";
 const PRODUCT_NAME = "ZeroCycle";
 const PRODUCT_DESCRIPTOR = "Electric motorcycle";
+
+const teamContent = {
+  title: "Meet the team behind ZeroCycle.",
+  paragraphs: [
+    "The ZeroCycle team is working to make electric mobility more accessible by transforming the motorcycles people already depend on, rather than asking riders to replace them.",
+    "The project is built around a practical retrofit system that replaces the combustion engine with an electric drivetrain while retaining the original chassis. Its motor, lithium-ion battery, controller and Battery Management System work together to deliver power and monitor battery health.",
+    "Designed with Nigerian roads and environmental conditions in mind, ZeroCycle aims to bring electric mobility within reach of individual owners and commercial riders.",
+  ],
+  imageAlt: "The ZeroCycle team",
+};
 
 const technology = [
   {
@@ -116,6 +127,15 @@ const audiences = [
   },
 ];
 
+const footerLinks = [
+  { label: "Home", href: "#home" },
+  { label: "About", href: "#about" },
+  { label: "Technology", href: "#technology" },
+  { label: "Specifications", href: "#specifications" },
+  { label: "Audience", href: "#audience" },
+  { label: "Team", href: "#team" },
+];
+
 // Reusable Motion Variants
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 28 },
@@ -146,12 +166,33 @@ const cardVariant: Variants = {
   },
 };
 
-function SectionLabel({ children }: { children: React.ReactNode }) {
+/**
+ * One shared shell for every content section, so they all have the exact same
+ * padding and width rules. A section can never squash or cut off its neighbour.
+ * To add a new section, wrap it in <Section id="..." bg="bg-white"> and you're done.
+ */
+function Section({
+  id,
+  bg,
+  children,
+}: {
+  id: string;
+  bg: string;
+  children: ReactNode;
+}) {
   return (
-    <motion.div
-      variants={fadeUp}
-      className="mb-6 flex items-center gap-3"
+    <section
+      id={id}
+      className={`relative w-full scroll-mt-28 px-5 py-24 sm:px-10 lg:px-16 lg:py-32 ${bg}`}
     >
+      <div className="mx-auto w-full max-w-[1440px]">{children}</div>
+    </section>
+  );
+}
+
+function SectionLabel({ children }: { children: ReactNode }) {
+  return (
+    <motion.div variants={fadeUp} className="mb-6 flex items-center gap-3">
       <span className="h-2 w-2 rounded-full bg-brand-primary" />
       <span className="text-sm font-bold uppercase tracking-[0.25em] text-black">
         {children}
@@ -172,7 +213,9 @@ export default function App() {
   const titleY = useTransform(scrollYProgress, [0, 1], [0, 45]);
 
   return (
-    <main className="min-h-screen overflow-hidden bg-white">
+    // overflow-x-clip (not overflow-hidden) so nothing is cut off vertically
+    // and the sticky navbar keeps working
+    <main className="w-full overflow-x-clip bg-white">
       <Navbar />
 
       {/* HERO SECTION */}
@@ -267,27 +310,25 @@ export default function App() {
             "
           >
             <p className="font-tip max-w-[380px] text-sm leading-6 text-gray-700">
-              Retain your motorcycle's original chassis.
+              Retain your motorcycle’s original chassis.
               Rethink how it moves.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/**Logo carousel */}
+      {/* LOGO CAROUSEL */}
       <LogoCarousel />
 
       {/* ABOUT SECTION */}
-      <section
-        id="about"
-        className="scroll-mt-28 bg-white px-5 py-24 sm:px-10 lg:px-16 lg:py-32"
-      >
-        <div className="mx-auto grid max-w-[1440px] gap-14 lg:grid-cols-2 lg:items-center lg:gap-24">
+      <Section id="about" bg="bg-white">
+        <div className="grid gap-14 lg:grid-cols-2 lg:items-center lg:gap-24">
           <motion.div
+            className="min-w-0"
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.25 }}
+            viewport={{ once: true, amount: 0.1 }}
           >
             <SectionLabel>The idea behind the innovation</SectionLabel>
 
@@ -308,8 +349,7 @@ export default function App() {
               combustion engine while retaining the original chassis. It
               uses an electric motor, rechargeable lithium-ion
               battery, motor controller, and BMS to deliver and regulate power
-              and monitor battery performance.
-              {" "}
+              and monitor battery performance.{" "}
               {PRODUCT_NAME} is {PRODUCT_DESCRIPTOR} developed under the {PROGRAMME} programme.
             </motion.p>
 
@@ -326,9 +366,9 @@ export default function App() {
           <motion.div
             initial={{ opacity: 0, x: 40, scale: 0.96 }}
             whileInView={{ opacity: 1, x: 0, scale: 1 }}
-            viewport={{ once: true, amount: 0.25 }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="flex items-center justify-center"
+            className="flex min-w-0 items-center justify-center"
           >
             <Image
               src={heroImg}
@@ -338,119 +378,216 @@ export default function App() {
             />
           </motion.div>
         </div>
-      </section>
+      </Section>
 
       {/* TECHNOLOGY SECTION */}
-      <section
-        id="technology"
-        className="scroll-mt-28 bg-[#F5F7F3] px-5 py-24 sm:px-10 lg:px-16 lg:py-32"
-      >
-        <div className="mx-auto max-w-[1440px]">
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.25 }}
-            className="flex flex-col justify-between gap-7 lg:flex-row lg:items-end"
-          >
-            <div>
-              <SectionLabel>Inside the system</SectionLabel>
-
-              <motion.h2
-                variants={fadeUp}
-                className="font-title max-w-2xl text-4xl font-black leading-[1.1] tracking-tight text-[#172119] sm:text-5xl lg:text-6xl"
-              >
-                Four components.
-                <br />
-                <span className="text-brand-primary">
-                  One electric system.
-                </span>
-              </motion.h2>
-            </div>
-
-            <motion.p
-              variants={fadeUp}
-              className="font-tip max-w-md text-lg leading-8 text-gray-700 sm:text-xl sm:leading-9"
-            >
-              A coordinated electric drivetrain designed to replace
-              conventional engine propulsion while retaining the
-              motorcycle's original chassis.
-            </motion.p>
-          </motion.div>
-
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.15 }}
-            className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
-          >
-            {technology.map((item) => {
-              const Icon = item.icon;
-
-              return (
-                <motion.article
-                  key={item.number}
-                  variants={cardVariant}
-                  whileHover={{ y: -8, transition: { duration: 0.25, ease: "easeOut" } }}
-                  className="group rounded-[1.5rem] border border-gray-200/80 bg-white p-7 transition-colors duration-300 hover:border-brand-primary/30 hover:shadow-xl hover:shadow-brand-primary/5"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-tip text-sm font-bold tracking-widest text-gray-300">
-                      {item.number}
-                    </span>
-
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EFF6EB] text-brand-primary transition-all duration-300 group-hover:scale-105 group-hover:bg-brand-primary group-hover:text-white">
-                      <Icon size={24} strokeWidth={1.7} />
-                    </div>
-                  </div>
-
-                  <h3 className="font-title mt-12 text-2xl font-bold tracking-tight text-[#172119]">
-                    {item.title}
-                  </h3>
-
-                  <p className="font-tip mt-4 text-lg leading-8 text-black">
-                    {item.description}
-                  </p>
-                </motion.article>
-              );
-            })}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* SPECIFICATIONS SECTION */}
-      <section
-        id="specifications"
-        className="scroll-mt-28 bg-white px-5 py-24 sm:px-10 lg:px-16 lg:py-32"
-      >
-        <div className="mx-auto max-w-[1440px]">
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.25 }}
-            className="mx-auto max-w-2xl text-center"
-          >
-            <div className="flex justify-center">
-              <SectionLabel>Performance targets</SectionLabel>
-            </div>
+      <Section id="technology" bg="bg-[#F5F7F3]">
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          className="flex flex-col justify-between gap-7 lg:flex-row lg:items-end"
+        >
+          <div>
+            <SectionLabel>Inside the system</SectionLabel>
 
             <motion.h2
               variants={fadeUp}
-              className="font-title text-4xl font-black leading-tight tracking-tight text-[#172119] sm:text-5xl lg:text-6xl"
+              className="font-title max-w-2xl text-4xl font-black leading-[1.1] tracking-tight text-[#172119] sm:text-5xl lg:text-6xl"
             >
-              Built around
-              <span className="text-brand-primary"> everyday needs.</span>
+              Four components.
+              <br />
+              <span className="text-brand-primary">One electric system.</span>
+            </motion.h2>
+          </div>
+
+          <motion.p
+            variants={fadeUp}
+            className="font-tip max-w-md text-lg leading-8 text-gray-700 sm:text-xl sm:leading-9"
+          >
+            A coordinated electric drivetrain designed to replace
+            conventional engine propulsion while retaining the
+            motorcycle’s original chassis.
+          </motion.p>
+        </motion.div>
+
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+        >
+          {technology.map((item) => {
+            const Icon = item.icon;
+
+            return (
+              <motion.article
+                key={item.number}
+                variants={cardVariant}
+                whileHover={{ y: -8, transition: { duration: 0.25, ease: "easeOut" } }}
+                className="group rounded-[1.5rem] border border-gray-200/80 bg-white p-7 transition-colors duration-300 hover:border-brand-primary/30 hover:shadow-xl hover:shadow-brand-primary/5"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-tip text-sm font-bold tracking-widest text-gray-300">
+                    {item.number}
+                  </span>
+
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EFF6EB] text-brand-primary transition-all duration-300 group-hover:scale-105 group-hover:bg-brand-primary group-hover:text-white">
+                    <Icon size={24} strokeWidth={1.7} />
+                  </div>
+                </div>
+
+                <h3 className="font-title mt-12 text-2xl font-bold tracking-tight text-[#172119]">
+                  {item.title}
+                </h3>
+
+                <p className="font-tip mt-4 text-lg leading-8 text-black">
+                  {item.description}
+                </p>
+              </motion.article>
+            );
+          })}
+        </motion.div>
+      </Section>
+
+      {/* SPECIFICATIONS SECTION */}
+      <Section id="specifications" bg="bg-white">
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          className="mx-auto max-w-2xl text-center"
+        >
+          <div className="flex justify-center">
+            <SectionLabel>Performance targets</SectionLabel>
+          </div>
+
+          <motion.h2
+            variants={fadeUp}
+            className="font-title text-4xl font-black leading-tight tracking-tight text-[#172119] sm:text-5xl lg:text-6xl"
+          >
+            Built around
+            <span className="text-brand-primary"> everyday needs.</span>
+          </motion.h2>
+
+          <motion.p
+            variants={fadeUp}
+            className="font-tip mt-6 text-lg leading-9 text-gray-700 sm:text-xl sm:leading-10"
+          >
+            The electric bike is being developed around practical
+            transportation requirements, with proposed performance
+            targets for everyday mobility.
+          </motion.p>
+        </motion.div>
+
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          className="mt-16 grid gap-5 md:grid-cols-3"
+        >
+          {specifications.map((spec, index) => {
+            const Icon = spec.icon;
+            const featured = index === 1;
+
+            return (
+              <motion.article
+                key={spec.title}
+                variants={cardVariant}
+                whileHover={{ y: -6, transition: { duration: 0.25, ease: "easeOut" } }}
+                className={`relative overflow-hidden rounded-[1.75rem] p-8 sm:p-10 ${featured
+                    ? "bg-brand-primary text-white shadow-xl shadow-brand-primary/15"
+                    : "border border-gray-100 bg-[#F7F9F5] text-[#172119]"
+                  }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span
+                    className={`font-tip text-sm font-bold uppercase tracking-widest ${featured ? "text-white/75" : "text-gray-600"
+                      }`}
+                  >
+                    0{index + 1} / Performance
+                  </span>
+
+                  <Icon
+                    size={27}
+                    strokeWidth={1.6}
+                    className={featured ? "text-white/80" : "text-brand-primary"}
+                  />
+                </div>
+
+                <div className="mt-14 flex items-baseline gap-2">
+                  <span className="font-title text-5xl font-black tracking-[-0.06em] sm:text-6xl lg:text-7xl">
+                    {spec.value}
+                  </span>
+
+                  <span
+                    className={`text-lg font-bold tracking-wider ${featured ? "text-white/90" : "text-black"
+                      }`}
+                  >
+                    {spec.unit}
+                  </span>
+                </div>
+
+                <h3 className="font-title mt-6 text-2xl font-bold">
+                  {spec.title}
+                </h3>
+
+                <p
+                  className={`font-tip mt-2 text-lg ${featured ? "text-white/80" : "text-gray-700"
+                    }`}
+                >
+                  {spec.description}
+                </p>
+
+                <div
+                  className={`mt-8 h-px w-full ${featured ? "bg-white/20" : "bg-gray-200"
+                    }`}
+                />
+
+                <p
+                  className={`font-tip mt-5 text-base ${featured ? "text-white/70" : "text-gray-600"
+                    }`}
+                >
+                  Proposed design requirement
+                </p>
+              </motion.article>
+            );
+          })}
+        </motion.div>
+      </Section>
+
+      {/* AUDIENCE SECTION */}
+      <Section id="audience" bg="bg-[#F5F7F3]">
+        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+          <motion.div
+            className="min-w-0"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+          >
+            <SectionLabel>Who it’s designed for</SectionLabel>
+
+            <motion.h2
+              variants={fadeUp}
+              className="font-title text-4xl font-black leading-[1.1] tracking-tight text-[#172119] sm:text-5xl lg:text-6xl"
+            >
+              A different way to move for{" "}
+              <span className="text-brand-primary">everyone.</span>
             </motion.h2>
 
             <motion.p
               variants={fadeUp}
-              className="font-tip mt-6 text-lg leading-9 text-gray-700 sm:text-xl sm:leading-10"
+              className="font-tip mt-7 max-w-md text-lg leading-9 text-gray-700 sm:text-xl sm:leading-10"
             >
-              The electric bike is being developed around practical
-              transportation requirements, with proposed performance
-              targets for everyday mobility.
+              Electric mobility should be practical and accessible
+              to the people who depend on motorcycles every day.
+              Our retrofit concept explores possibilities for
+              individuals and commercial operators alike.
             </motion.p>
           </motion.div>
 
@@ -458,172 +595,118 @@ export default function App() {
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.15 }}
-            className="mt-16 grid gap-5 md:grid-cols-3"
+            viewport={{ once: true, amount: 0.1 }}
+            className="grid min-w-0 gap-3 sm:grid-cols-2"
           >
-            {specifications.map((spec, index) => {
-              const Icon = spec.icon;
+            {audiences.map((audience) => {
+              const Icon = audience.icon;
 
               return (
                 <motion.article
-                  key={spec.title}
+                  key={audience.number}
                   variants={cardVariant}
-                  whileHover={{ y: -6, transition: { duration: 0.25, ease: "easeOut" } }}
-                  className={`relative overflow-hidden rounded-[1.75rem] p-8 sm:p-10 ${index === 1
-                      ? "bg-brand-primary text-white shadow-xl shadow-brand-primary/15"
-                      : "border border-gray-100 bg-[#F7F9F5] text-[#172119]"
-                    }`}
+                  whileHover={{ y: -5, transition: { duration: 0.2, ease: "easeOut" } }}
+                  className="group rounded-[1.5rem] border border-gray-200/80 bg-white p-6 transition-colors duration-300 hover:border-brand-primary/30 hover:shadow-lg hover:shadow-brand-primary/5 sm:p-7"
                 >
                   <div className="flex items-center justify-between">
-                    <span
-                      className={`font-tip text-sm font-bold uppercase tracking-widest ${index === 1 ? "text-white/75" : "text-gray-600"
-                        }`}
-                    >
-                      0{index + 1} / Performance
-                    </span>
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EFF6EB] text-brand-primary transition-colors group-hover:bg-brand-primary group-hover:text-white">
+                      <Icon size={23} />
+                    </div>
 
-                    <Icon
-                      size={27}
-                      strokeWidth={1.6}
-                      className={index === 1 ? "text-white/80" : "text-brand-primary"}
-                    />
-                  </div>
-
-                  <div className="mt-14 flex items-baseline gap-2">
-                    <span className="font-title text-5xl font-black tracking-[-0.06em] sm:text-6xl lg:text-7xl">
-                      {spec.value}
-                    </span>
-
-                    <span
-                      className={`text-lg font-bold tracking-wider ${index === 1 ? "text-white/90" : "text-black"
-                        }`}
-                    >
-                      {spec.unit}
+                    <span className="font-tip text-sm font-bold text-gray-300">
+                      {audience.number}
                     </span>
                   </div>
 
-                  <h3 className="font-title mt-6 text-2xl font-bold">
-                    {spec.title}
+                  <h3 className="font-title mt-9 text-2xl font-bold text-[#172119]">
+                    {audience.title}
                   </h3>
 
-                  <p
-                    className={`font-tip mt-2 text-lg ${index === 1 ? "text-white/80" : "text-gray-700"
-                      }`}
-                  >
-                    {spec.description}
-                  </p>
-
-                  <div
-                    className={`mt-8 h-px w-full ${index === 1 ? "bg-white/20" : "bg-gray-200"
-                      }`}
-                  />
-
-                  <p
-                    className={`font-tip mt-5 text-base ${index === 1 ? "text-white/70" : "text-gray-600"
-                      }`}
-                  >
-                    Proposed design requirement
+                  <p className="font-tip mt-3 text-lg leading-8 text-gray-700">
+                    {audience.description}
                   </p>
                 </motion.article>
               );
             })}
           </motion.div>
         </div>
-      </section>
+      </Section>
 
-      {/* AUDIENCE SECTION */}
-      <section
-        id="audience"
-        className="scroll-mt-28 bg-[#F5F7F3] px-5 py-24 sm:px-10 lg:px-16 lg:py-32"
-      >
-        <div className="mx-auto max-w-[1440px]">
-          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.25 }}
+      {/* TEAM SECTION*/}
+      <Section id="team" bg="bg-[#FAFBF8]">
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20"
+        >
+          {/* IMAGE (left) */}
+          <motion.div variants={fadeUp} className="relative min-w-0">
+
+
+            <div
+              className="relative w-full overflow-hidden rounded-2xl"
+              style={{ aspectRatio: "4 / 3" }}
             >
-              <SectionLabel>Who it's designed for</SectionLabel>
-
-              <motion.h2
-                variants={fadeUp}
-                className="font-title text-4xl font-black leading-[1.1] tracking-tight text-[#172119] sm:text-5xl lg:text-6xl"
+              <motion.div
+                className="absolute inset-0"
+                whileHover={{ scale: 1.08 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               >
-                A different way to move for{" "}
-                <span className="text-brand-primary">everyone.</span>
-              </motion.h2>
+                <Image
+                  src={teamImg}
+                  alt={teamContent.imageAlt}
+                  fill
+                  sizes="(min-width: 1024px) 600px, 100vw"
+                  className="object-cover object-top "
+                />
+              </motion.div>
+            </div>
+          </motion.div>
 
-              <motion.p
-                variants={fadeUp}
-                className="font-tip mt-7 max-w-md text-lg leading-9 text-gray-700 sm:text-xl sm:leading-10"
-              >
-                Electric mobility should be practical and accessible
-                to the people who depend on motorcycles every day.
-                Our retrofit concept explores possibilities for
-                individuals and commercial operators alike.
-              </motion.p>
-            </motion.div>
+          {/* WRITEUP  */}
+          <motion.div variants={fadeUp} className="min-w-0">
+            <h2 className="font-title text-4xl font-black leading-[1.1] tracking-tight text-[#172119] sm:text-5xl">
+              {teamContent.title}
+            </h2>
 
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.15 }}
-              className="grid gap-3 sm:grid-cols-2"
-            >
-              {audiences.map((audience) => {
-                const Icon = audience.icon;
+            <div
+              aria-hidden="true"
+              className="mt-5 h-1 w-12 rounded-full bg-brand-primary"
+            />
 
-                return (
-                  <motion.article
-                    key={audience.number}
-                    variants={cardVariant}
-                    whileHover={{ y: -5, transition: { duration: 0.2, ease: "easeOut" } }}
-                    className="group rounded-[1.5rem] border border-gray-200/80 bg-white p-6 transition-colors duration-300 hover:border-brand-primary/30 hover:shadow-lg hover:shadow-brand-primary/5 sm:p-7"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EFF6EB] text-brand-primary transition-colors group-hover:bg-brand-primary group-hover:text-white">
-                        <Icon size={23} />
-                      </div>
-
-                      <span className="font-tip text-sm font-bold text-gray-300">
-                        {audience.number}
-                      </span>
-                    </div>
-
-                    <h3 className="font-title mt-9 text-2xl font-bold text-[#172119]">
-                      {audience.title}
-                    </h3>
-
-                    <p className="font-tip mt-3 text-lg leading-8 text-gray-700">
-                      {audience.description}
-                    </p>
-                  </motion.article>
-                );
-              })}
-            </motion.div>
-          </div>
-        </div>
-      </section>
+            <div className="mt-7 space-y-5">
+              {teamContent.paragraphs.map((paragraph) => (
+                <p
+                  key={paragraph}
+                  className="font-tip text-lg leading-9 text-gray-700"
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </motion.div>
+        </motion.div>
+      </Section>
 
       {/* VISION AND FOOTER */}
       <section
         id="contact"
-        className="scroll-mt-28 bg-[#172119] px-5 py-24 text-white sm:px-10 lg:px-16 lg:py-32"
+        className="relative w-full scroll-mt-28 bg-[#172119] px-5 py-24 text-white sm:px-10 lg:px-16 lg:py-32"
       >
-        <div className="mx-auto max-w-[1440px]">
+        <div className="mx-auto w-full max-w-[1440px]">
           <motion.div
             initial={{ opacity: 0, y: 36 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#202E23] px-7 py-16 text-center sm:px-14 sm:py-24"
           >
             <motion.div
               initial={{ scale: 1.08 }}
               whileInView={{ scale: 1 }}
-              viewport={{ once: true, amount: 0.2 }}
+              viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 1.4, ease: "easeOut" }}
               className="absolute inset-0"
             >
@@ -645,7 +728,7 @@ export default function App() {
               variants={staggerContainer}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
+              viewport={{ once: true, amount: 0.1 }}
               className="relative z-10 mx-auto max-w-3xl"
             >
               <motion.div
@@ -686,24 +769,19 @@ export default function App() {
           <motion.footer
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.6 }}
             className="mt-16"
           >
             <div className="flex flex-col gap-10 border-b border-white/10 pb-10 md:flex-row md:items-start md:justify-between">
               <div className="flex flex-col gap-8 sm:flex-row sm:gap-16">
                 <a href="#home" className="flex w-fit items-center gap-3">
-                  <span className="inline-flex items-center gap-1 text-lg font-black tracking-[0.12em]">
-  <Image
-    src={Logo1}
-    width={150}
-    alt="zero cycle logo"
-    className="h-auto w-[150px] shrink-0"
-  />
-  <span>
-  
-  </span>
-</span>
+                  <Image
+                    src={Logo1}
+                    width={150}
+                    alt="ZeroCycle logo"
+                    className="h-auto w-[150px] shrink-0"
+                  />
                 </a>
 
                 <div className="space-y-4">
@@ -720,13 +798,7 @@ export default function App() {
               </div>
 
               <div className="flex flex-wrap gap-x-7 gap-y-4">
-                {[
-                  { label: "Home", href: "#home" },
-                  { label: "About", href: "#about" },
-                  { label: "Technology", href: "#technology" },
-                  { label: "Specifications", href: "#specifications" },
-                  { label: "Audience", href: "#audience" },
-                ].map((link) => (
+                {footerLinks.map((link) => (
                   <a
                     key={link.label}
                     href={link.href}
