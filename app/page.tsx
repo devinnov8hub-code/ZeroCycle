@@ -274,19 +274,23 @@ export default function App() {
               </p>
             </motion.div>
           </div>
-
           <motion.div
             style={{ y: bikeY }}
-            initial={{ opacity: 0, scale: 0.94, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
+            initial={{ opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.95, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             className="
-              pointer-events-none relative z-20
-              -mt-10 flex w-full justify-center
-              sm:-mt-32 lg:-mt-48
-            "
+    pointer-events-none relative z-20
+    -mt-10 flex w-full justify-center
+    sm:-mt-32 lg:-mt-48
+  "
           >
-            <div className="relative h-[420px] w-full sm:h-[640px] lg:h-[800px]">
+            <motion.div
+              whileHover={{ scale: 1.08 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              style={{ pointerEvents: "auto" }}
+              className="relative h-[420px] w-full cursor-zoom-in sm:h-[640px] lg:h-[800px]"
+            >
               <Image
                 src={heroImg}
                 alt="Zero emission electric motorcycle"
@@ -294,11 +298,10 @@ export default function App() {
                 priority
                 sizes="(max-width: 768px) 100vw, 90vw"
                 className="object-contain object-center"
-                loading="eager"
               />
-            </div>
+            </motion.div>
           </motion.div>
-
+          {/**Hero image */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -500,8 +503,8 @@ export default function App() {
                 variants={cardVariant}
                 whileHover={{ y: -6, transition: { duration: 0.25, ease: "easeOut" } }}
                 className={`relative overflow-hidden rounded-[1.75rem] p-8 sm:p-10 ${featured
-                    ? "bg-brand-primary text-white shadow-xl shadow-brand-primary/15"
-                    : "border border-gray-100 bg-[#F7F9F5] text-[#172119]"
+                  ? "bg-brand-primary text-white shadow-xl shadow-brand-primary/15"
+                  : "border border-gray-100 bg-[#F7F9F5] text-[#172119]"
                   }`}
               >
                 <div className="flex items-center justify-between">
